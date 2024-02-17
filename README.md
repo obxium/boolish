@@ -1,0 +1,3 @@
+# BOOLISH
+
+Farcaster frame.
