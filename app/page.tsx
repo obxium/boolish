@@ -10,7 +10,6 @@ import {
   useFramesReducer,
 } from "frames.js/next/server";
 import Link from "next/link";
-import { DEBUG_HUB_OPTIONS } from "./debug/constants";
 
 type State = {
   active: string;
@@ -35,13 +34,7 @@ export default async function Home({
 }: NextServerPageProps) {
   const previousFrame = getPreviousFrame<State>(searchParams);
 
-  const frameMessage = await getFrameMessage(previousFrame.postBody, {
-    ...DEBUG_HUB_OPTIONS,
-  });
-
-  if (frameMessage && !frameMessage?.isValid) {
-    throw new Error("Invalid frame payload");
-  }
+  const frameMessage = await getFrameMessage(previousFrame.postBody, {});
 
   const [state, dispatch] = useFramesReducer<State>(
     reducer,
@@ -49,10 +42,8 @@ export default async function Home({
     previousFrame
   );
 
-  // Here: do a server side side effect either sync or async (using await), such as minting an NFT if you want.
-  // example: load the users credentials & check they have an NFT
 
-  console.log("info: state is:", state);
+  // console.log("info: state is:", state);
 
   if (frameMessage) {
     const {
@@ -69,7 +60,7 @@ export default async function Home({
       requesterUserData,
     } = frameMessage;
 
-    console.log("info: frameMessage is:", frameMessage);
+    // console.log("info: frameMessage is:", frameMessage);
   }
 
   const baseUrl = process.env.NEXT_PUBLIC_HOST || "http://localhost:3000";
@@ -78,8 +69,8 @@ export default async function Home({
   return (
     <div className="p-4">
       <FrameContainer
-        postUrl="/frames"
         pathname="/"
+        postUrl="/frames"
         state={state}
         previousFrame={previousFrame}
       >
