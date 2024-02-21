@@ -7,7 +7,6 @@ import {
   getPreviousFrame,
   useFramesReducer,
 } from "frames.js/next/server";
-import Link from "next/link";
 
 type State = {
   active: string;
@@ -42,7 +41,6 @@ export default async function Home({
 
   const baseUrl = process.env.NEXT_PUBLIC_HOST || "http://localhost:3000";
 
-  // then, when done, return next frame
   return (
     <div className="p-4">
       <FrameContainer
